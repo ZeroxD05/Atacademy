@@ -1,0 +1,52 @@
+{
+  "events": [
+    {
+      "ts": 1756921451005,
+      "ip": "::ffff:127.0.0.1",
+      "country": null,
+      "path": "/",
+      "referrer": null,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0"
+    },
+    {
+      "ts": 1756921468970,
+      "ip": "::ffff:127.0.0.1",
+      "country": null,
+      "path": "/",
+      "referrer": "http://localhost:3000/admin.html",
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0"
+    },
+    {
+      "ts": 1756921475182,
+      "ip": "::ffff:127.0.0.1",
+      "country": null,
+      "path": "/",
+      "referrer": null,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0"
+    },
+    {
+      "ts": 1756921493441,
+      "ip": "::ffff:127.0.0.1",
+      "country": null,
+      "path": "/",
+      "referrer": null,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0"
+    },
+    {
+      "ts": 1756921516944,
+      "ip": "::ffff:127.0.0.1",
+      "country": null,
+      "path": "/",
+      "referrer": "http://localhost:3000/admin.html",
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0"
+    },
+    {
+      "ts": 1756922122551,
+      "ip": "::ffff:127.0.0.1",
+      "country": null,
+      "path": "/",
+      "referrer": null,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0"
+    }
+  ]
+}

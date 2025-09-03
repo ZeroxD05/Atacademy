@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Analytics</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <style>
+    :root { --gap: 16px; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background:#fafafa; color:#111; }
+    header { position:sticky; top:0; background:white; border-bottom:1px solid #eee; padding: 14px 20px; display:flex; justify-content:space-between; align-items:center; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 20px; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--gap); }
+    .card { background: white; border:1px solid #eee; border-radius: 16px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+    .muted { color:#666; }
+    .kpi { font-size: 32px; font-weight: 700; margin: 6px 0; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { text-align:left; border-bottom:1px solid #eee; padding: 8px; }
+    canvas { width:100%; height:320px; }
+    footer { text-align:center; color:#777; padding: 24px 0; }
+    a.button { display:inline-block; padding:10px 14px; border-radius: 12px; border:1px solid #ddd; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <strong>Admin · Analytics</strong>
+      <div class="muted" style="font-size:12px">Echte Trackingdaten vom Server</div>
+    </div>
+    <nav>
+      <a class="button" href="/">← Zurück zur Website</a>
+    </nav>
+  </header>
+  <div class="wrap">
+    <div class="grid">
+      <div class="card">
+        <div class="muted">Besucher heute</div>
+        <div id="kpi-today" class="kpi">–</div>
+      </div>
+      <div class="card">
+        <div class="muted">Diese Woche</div>
+        <div id="kpi-week" class="kpi">–</div>
+      </div>
+      <div class="card">
+        <div class="muted">Diesen Monat</div>
+        <div id="kpi-month" class="kpi">–</div>
+      </div>
+      <div class="card">
+        <div class="muted">Dieses Jahr</div>
+        <div id="kpi-year" class="kpi">–</div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:var(--gap)">
+      <div class="card">
+        <h3>Verlauf · Wöchentlich</h3>
+        <canvas id="chart-weekly"></canvas>
+      </div>
+      <div class="card">
+        <h3>Verlauf · Monatlich</h3>
+        <canvas id="chart-monthly"></canvas>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:var(--gap)">
+      <div class="card">
+        <h3>Herkunft der Besucher (Top Länder)</h3>
+        <table id="table-countries">
+          <thead><tr><th>Land</th><th>Anzahl</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Top Referrer</h3>
+        <table id="table-referrers">
+          <thead><tr><th>Quelle</th><th>Anzahl</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <footer>Powered by Express + geoip-lite · <span id="updated" class="muted"></span></footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/admin.js"></script>
+</body>
+</html>
