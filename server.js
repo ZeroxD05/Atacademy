@@ -4,6 +4,71 @@ const fs = require('fs');
 const path = require('path');
 const geoip = require('geoip-lite');
 const app = express();
+
+// === Simple Auth Setup ===
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// In-memory token store (clears on server restart)
+const ACTIVE_TOKENS = new Set();
+
+// Credentials from env with safe defaults (change in production)
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'ata2005hh@gmail.com';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Atailayda05';
+
+function parseCookies(req) {
+  const raw = req.headers.cookie || '';
+  const obj = {};
+  raw.split(';').forEach(pair => {
+    const idx = pair.indexOf('=');
+    if (idx > -1) {
+      const k = pair.slice(0, idx).trim();
+      const v = pair.slice(idx + 1).trim();
+      obj[k] = decodeURIComponent(v);
+    }
+  });
+  return obj;
+}
+
+function requireAuth(req, res, next) {
+  const cookies = parseCookies(req);
+  const token = cookies.auth;
+  if (token && ACTIVE_TOKENS.has(token)) return next();
+  // for API requests return 401 JSON, for pages redirect
+  if (req.path.startsWith('/api/')) return res.status(401).json({ error: 'unauthorized' });
+  return res.redirect('/login.html');
+}
+
+// Login routes
+app.get('/login', (req, res) => res.redirect('/login.html'));
+
+app.post('/login', (req, res) => {
+  const { email, password } = req.body || {};
+  if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+    const token = require('crypto').randomBytes(24).toString('hex');
+    ACTIVE_TOKENS.add(token);
+    res.cookie ? null : null; // no cookie-parser; set manually
+    res.setHeader('Set-Cookie', `auth=${encodeURIComponent(token)}; HttpOnly; Path=/; SameSite=Lax; Max-Age=604800`);
+    return res.json({ ok: true });
+  }
+  return res.status(401).json({ ok: false, error: 'invalid_credentials' });
+});
+
+app.post('/logout', (req, res) => {
+  const cookies = parseCookies(req);
+  const token = cookies.auth;
+  if (token) ACTIVE_TOKENS.delete(token);
+  res.setHeader('Set-Cookie', 'auth=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0');
+  res.json({ ok: true });
+});
+
+// Protect admin UI route
+app.get('/admin', requireAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+// Prevent direct access to raw file, redirect to /admin
+app.get('/admin.html', (req, res) => res.redirect('/admin'));
+
 const PORT = process.env.PORT || 3000;
 
 const DATA_DIR = path.join(__dirname, 'data');
@@ -80,7 +145,7 @@ app.post('/api/track', (req, res) => {
 });
 
 // Stats endpoint
-app.get('/api/stats', (req, res) => {
+app.get('/api/stats', requireAuth, (req, res) => {
   const db = loadData();
   const events = db.events || [];
   const now = Date.now();
