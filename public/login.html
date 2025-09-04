@@ -1,50 +1,78 @@
-
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login • Admin</title>
-  <link rel="stylesheet" href="/style.css" />
-  <style>
-    .login-card{max-width:420px;margin:12vh auto;padding:2rem;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.08);background:#fff}
-    .login-card h1{margin:0 0 1rem}
-    .login-card form{display:grid;gap:.75rem}
-    .login-card input{padding:.75rem;border:1px solid #ddd;border-radius:10px;font-size:1rem}
-    .login-card button{padding:.8rem 1rem;border:0;border-radius:10px;cursor:pointer;font-weight:600}
-  </style>
-</head>
-<body>
-  <div class="login-card">
-    <h1>Admin Login</h1>
-    <p>Bitte melde dich an, um das Admin-Panel zu öffnen.</p>
-    <form id="login-form">
-      <label>E-Mail<br><input type="email" name="email" required value="ata2005hh@gmail.com" /></label>
-      <label>Passwort<br><input type="password" name="password" required /></label>
-      <button type="submit">Anmelden</button>
-      <p id="msg" style="color:#c00;display:none"></p>
-    </form>
-  </div>
-  <script>
-    const form = document.getElementById('login-form');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const fd = new FormData(form);
-      const body = { email: fd.get('email'), password: fd.get('password') };
-      try {
-        const res = await fetch('/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
-        const data = await res.json();
-        if (data.ok) {
-          window.location.href = '/admin';
-        } else {
-          document.getElementById('msg').style.display='block';
-          document.getElementById('msg').textContent = 'Login fehlgeschlagen';
-        }
-      } catch(err) {
-        document.getElementById('msg').style.display='block';
-        document.getElementById('msg').textContent = 'Netzwerkfehler';
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login • Admin</title>
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+      .login-card {
+        max-width: 420px;
+        margin: 12vh auto;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        background: #fff;
       }
-    });
-  </script>
-</body>
+      .login-card h1 {
+        margin: 0 0 1rem;
+      }
+      .login-card form {
+        display: grid;
+        gap: 0.75rem;
+      }
+      .login-card input {
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 1rem;
+      }
+      .login-card button {
+        padding: 0.8rem 1rem;
+        border: 0;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-card">
+      <h1>Admin Login</h1>
+      <p>Bitte melde dich an, um das Admin-Panel zu öffnen.</p>
+      <form id="login-form">
+        <label>E-Mail<br /><input type="email" name="email" required /></label>
+        <label
+          >Passwort<br /><input type="password" name="password" required
+        /></label>
+        <button type="submit">Anmelden</button>
+        <p id="msg" style="color: #c00; display: none"></p>
+      </form>
+    </div>
+    <script>
+      const form = document.getElementById("login-form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const body = { email: fd.get("email"), password: fd.get("password") };
+        try {
+          const res = await fetch("/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          const data = await res.json();
+          if (data.ok) {
+            window.location.href = "/admin";
+          } else {
+            document.getElementById("msg").style.display = "block";
+            document.getElementById("msg").textContent = "Login fehlgeschlagen";
+          }
+        } catch (err) {
+          document.getElementById("msg").style.display = "block";
+          document.getElementById("msg").textContent = "Netzwerkfehler";
+        }
+      });
+    </script>
+  </body>
 </html>
