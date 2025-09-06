@@ -2,8 +2,39 @@
   function fmt(n) {
     return new Intl.NumberFormat("de-DE").format(n);
   }
-  const res = await fetch("/api/stats");
-  const data = await res.json();
+
+  // Function to get data from localStorage
+  function getCachedData() {
+    const cached = localStorage.getItem("dashboardData");
+    if (cached) {
+      const { data, timestamp } = JSON.parse(cached);
+      // Check if cache is less than 5 minutes old
+      if (Date.now() - timestamp < 5 * 60 * 1000) {
+        return data;
+      }
+    }
+    return null;
+  }
+
+  // Function to set data to localStorage
+  function setCachedData(data) {
+    localStorage.setItem(
+      "dashboardData",
+      JSON.stringify({
+        data,
+        timestamp: Date.now(),
+      })
+    );
+  }
+
+  // Try to load cached data first
+  let data = getCachedData();
+  if (!data) {
+    // Fetch new data if no valid cache
+    const res = await fetch("/api/stats");
+    data = await res.json();
+    setCachedData(data);
+  }
 
   // KPIs
   document.getElementById("kpi-today").textContent = fmt(data.kpi.today);
@@ -16,6 +47,7 @@
 
   // Tables
   const tbCountries = document.querySelector("#table-countries tbody");
+  tbCountries.innerHTML = ""; // Clear existing rows
   data.countries.slice(0, 10).forEach((row) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `<td>${row.country || "Unbekannt"}</td><td>${fmt(
@@ -25,6 +57,7 @@
   });
 
   const tbRef = document.querySelector("#table-referrers tbody");
+  tbRef.innerHTML = ""; // Clear existing rows
   data.referrers.slice(0, 10).forEach((row) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `<td>${row.referrer || "Direkt"}</td><td>${fmt(
@@ -40,9 +73,14 @@
     return { labels, values };
   }
 
+  // Destroy existing charts if they exist to prevent duplication
+  const canvasW = document.getElementById("chart-weekly");
+  if (canvasW.chart) {
+    canvasW.chart.destroy();
+  }
   const w = mkSeries(data.timeseries.weekly);
-  const ctxW = document.getElementById("chart-weekly").getContext("2d");
-  new Chart(ctxW, {
+  const ctxW = canvasW.getContext("2d");
+  canvasW.chart = new Chart(ctxW, {
     type: "line",
     data: {
       labels: w.labels,
@@ -55,9 +93,13 @@
     },
   });
 
+  const canvasM = document.getElementById("chart-monthly");
+  if (canvasM.chart) {
+    canvasM.chart.destroy();
+  }
   const m = mkSeries(data.timeseries.monthly);
-  const ctxM = document.getElementById("chart-monthly").getContext("2d");
-  new Chart(ctxM, {
+  const ctxM = canvasM.getContext("2d");
+  canvasM.chart = new Chart(ctxM, {
     type: "bar",
     data: {
       labels: m.labels,
