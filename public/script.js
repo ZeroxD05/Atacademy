@@ -29,12 +29,13 @@ addToCartBtns.forEach((btn) => {
     const id = card.dataset.id;
     const title = card.dataset.title;
     const price = parseFloat(card.dataset.price);
+
+    // Prüfen, ob das Produkt schon im Warenkorb ist
     const existing = cart.find((item) => item.id === id);
-    if (existing) {
-      existing.qty += 1;
-    } else {
-      cart.push({ id, title, price, qty: 1 });
+    if (!existing) {
+      cart.push({ id, title, price, qty: 1 }); // Menge immer 1
     }
+
     updateCart();
     cartSidebar.classList.add("open");
     overlay.classList.add("active");
@@ -60,7 +61,7 @@ function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// updateCart anpassen: nach jedem Update speichern
+// Warenkorb aktualisieren
 function updateCart() {
   cartItems.innerHTML = "";
   cartCount.textContent = `(${cart.reduce((sum, item) => sum + item.qty, 0)})`;
@@ -69,6 +70,7 @@ function updateCart() {
     cartItems.innerHTML = "<p>Dein Warenkorb ist leer.</p>";
     return;
   }
+
   let total = 0;
   const table = document.createElement("table");
   table.style.width = "100%";
@@ -83,26 +85,17 @@ function updateCart() {
     </thead>
     <tbody></tbody>
   `;
-  // Hilfsfunktion für Preisformatierung ohne .00
+
   function formatPrice(val) {
     return val % 1 === 0 ? val.toFixed(0) : val.toFixed(2).replace(".", ",");
   }
+
   cart.forEach((item) => {
     total += item.price * item.qty;
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${item.title}</td>
-      <td style="text-align:center;">
-        <div class="qty-vertical">
-          <button class="qty-btn" data-id="${
-            item.id
-          }" data-action="plus">+</button>
-          <span style="margin:4px 0;">${item.qty}</span>
-          <button class="qty-btn" data-id="${
-            item.id
-          }" data-action="minus">−</button>
-        </div>
-      </td>
+      <td style="text-align:center;">${item.qty}</td>
       <td style="text-align:right; vertical-align:middle;">${formatPrice(
         item.price * item.qty
       )} €</td>
@@ -114,7 +107,6 @@ function updateCart() {
   });
   cartItems.appendChild(table);
 
-  // Gesamtpreis und rechtlicher Hinweis
   const totalDiv = document.createElement("div");
   totalDiv.className = "cart-total-info";
   totalDiv.innerHTML = `
@@ -131,19 +123,6 @@ function updateCart() {
       const id = btn.dataset.id;
       const idx = cart.findIndex((item) => item.id === id);
       if (idx > -1) cart.splice(idx, 1);
-      updateCart();
-    };
-  });
-
-  // Mengen-Buttons
-  document.querySelectorAll(".qty-btn").forEach((btn) => {
-    btn.onclick = function () {
-      const id = btn.dataset.id;
-      const action = btn.dataset.action;
-      const item = cart.find((i) => i.id === id);
-      if (!item) return;
-      if (action === "plus") item.qty += 1;
-      if (action === "minus" && item.qty > 1) item.qty -= 1;
       updateCart();
     };
   });
@@ -166,18 +145,15 @@ if (window.innerWidth < 1024) {
     productDots[index]?.classList.add("active");
   });
 } else {
-  // Auf Desktop keine Dots nötig
   productDotsWrap.style.display = "none";
 }
 
 // --- FAQ Akkordeon ---
 const faqItems = document.querySelectorAll(".faq-item");
 
-// FAQ: Öffnen/Schließen beim Klick
 document.querySelectorAll(".faq-question").forEach((btn) => {
   btn.addEventListener("click", function () {
     const item = btn.closest(".faq-item");
-    // Toggle: Schließe, wenn schon offen
     item.classList.toggle("active");
   });
 });
@@ -185,7 +161,6 @@ document.querySelectorAll(".faq-question").forEach((btn) => {
 // --- Back-to-top (nur Mobile) ---
 const backToTop = document.getElementById("backToTop");
 
-// Show/Hide je nach Scrollposition (nur Mobile aktiv sinnvoll)
 function toggleBackToTop() {
   const isMobile = window.innerWidth <= 768;
   if (!backToTop) return;
