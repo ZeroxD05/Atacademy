@@ -30,3 +30,4 @@ npm start
 
 - Auf GitHub Pages funktioniert das Tracking nicht, weil kein Backend vorhanden ist.
 - Nach Migration zu Render werden die Events aufgezeichnet.
+- Stripe machen
