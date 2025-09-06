@@ -427,6 +427,7 @@ header.scrolled {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  position: relative; /* wichtig, damit das Badge sich am Container orientiert */
 }
 
 .product-img {
@@ -479,7 +480,29 @@ header.scrolled {
   background: limegreen;
   animation: blink 1.2s infinite;
 }
+.dot-yellow {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgb(204, 175, 14);
+  animation: blink 1.2s infinite;
+}
+.availability-limited {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgb(204, 175, 14);
+}
 
+.availability-limited .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgb(211, 190, 74);
+  animation: blink 1.2s infinite;
+}
 @keyframes blink {
   0%,
   100% {
@@ -1196,4 +1219,27 @@ header.scrolled {
     width: 64px;
     height: 64px;
   }
+}
+.alert-text {
+  color: #ff5722; /* Auffällige Farbe für den Text */
+  font-weight: 700; /* Fettgedruckt für bessere Sichtbarkeit */
+}
+.old-price {
+  color: #ff5722;
+  text-decoration: line-through;
+  margin-left: -5vw;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.697);
 }
