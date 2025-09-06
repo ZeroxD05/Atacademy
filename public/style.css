@@ -1221,11 +1221,11 @@ header.scrolled {
   }
 }
 .alert-text {
-  color: #ff5722; /* Auffällige Farbe für den Text */
+  color: rgb(209, 0, 0); /* Auffällige Farbe für den Text */
   font-weight: 700; /* Fettgedruckt für bessere Sichtbarkeit */
 }
 .old-price {
-  color: #ff5722;
+  color: rgb(209, 0, 0);
   text-decoration: line-through;
   margin-left: -5vw;
   font-weight: 700;
