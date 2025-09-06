@@ -7,6 +7,30 @@
       "path": "/",
       "referrer": null,
       "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0"
+    },
+    {
+      "ts": 1757157708953,
+      "ip": "::1",
+      "country": null,
+      "path": "/",
+      "referrer": null,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+    },
+    {
+      "ts": 1757157764460,
+      "ip": "::1",
+      "country": null,
+      "path": "/",
+      "referrer": null,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+    },
+    {
+      "ts": 1757157834428,
+      "ip": "::1",
+      "country": null,
+      "path": "/",
+      "referrer": "http://localhost:3000/admin",
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
     }
   ]
 }
