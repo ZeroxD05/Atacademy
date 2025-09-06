@@ -149,17 +149,6 @@ function updateCart() {
   });
 }
 
-// Stripe Checkout (Demo, Backend nötig!)
-checkoutBtn.onclick = async function () {
-  if (cart.length === 0) return alert("Warenkorb ist leer!");
-  // Hier würdest du die cart-Daten an dein Backend schicken und Stripe Checkout starten
-  alert("Stripe Checkout würde jetzt starten (Demo)");
-  // Beispiel für Stripe Checkout mit Backend:
-  // fetch('/create-checkout-session', { method: 'POST', body: JSON.stringify(cart) })
-  //   .then(res => res.json())
-  //   .then(data => window.location.href = data.checkoutUrl);
-};
-
 // --- Produkte Dots ---
 const productScroll = document.getElementById("productScroll");
 const productDotsWrap = document.getElementById("productDots");

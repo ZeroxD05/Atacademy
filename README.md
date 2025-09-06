@@ -1,7 +1,5 @@
 # Atacademy Analytics (Express)
 
-Einfaches Node/Express-Backend + statisches Frontend mit Admin-Analytics.
-
 ## Schnellstart (lokal)
 
 ```bash

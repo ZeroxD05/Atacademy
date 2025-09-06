@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "express": "^4.19.2",
-    "geoip-lite": "^1.4.7"
+    "geoip-lite": "^1.4.7",
+    "stripe": "^18.5.0"
   }
 }
