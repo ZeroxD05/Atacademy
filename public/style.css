@@ -1015,11 +1015,7 @@ header.scrolled {
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s;
   margin-top: 0.5rem;
-}
-.add-to-cart-btn:hover {
-  background: #2563eb;
 }
 
 .checkout-btn {
@@ -1224,13 +1220,26 @@ header.scrolled {
   color: rgb(209, 0, 0); /* Auffällige Farbe für den Text */
   font-weight: 700; /* Fettgedruckt für bessere Sichtbarkeit */
 }
-.old-price {
-  color: rgb(209, 0, 0);
-  text-decoration: line-through;
-  margin-left: -5vw;
-  font-weight: 700;
-  font-size: 1rem;
+
+@media (min-width: 601px) {
+  .old-price {
+    color: rgb(209, 0, 0);
+    text-decoration: line-through;
+    margin-left: -3vw;
+    font-weight: 700;
+    font-size: 1rem;
+  }
 }
+@media (max-width: 600px) {
+  .old-price {
+    color: rgb(209, 0, 0);
+    text-decoration: line-through;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-left: -5vw;
+  }
+}
+
 .badge {
   position: absolute;
   top: 10px;
